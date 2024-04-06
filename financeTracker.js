@@ -42,7 +42,51 @@ function addExpenses(event) {
     event.preventDefault();
 
     //Get expense name and add from form
-    const itemNameInput = document.getElementById("cost-name");
-    const itemAmountInput = document.getElement
+    const costNameInput = document.getElementById("cost-name");
+    const costAmountInput = document.getElementById("cost-amount");
+    const costName = costNameInput.value;
+    const costAmount = parseFloat(costAmountInput.value);
 
+    //clear form inputs
+    costNameInput.value = "";
+    costAmountInput.value = "";
+
+    //Validate inputs
+    if (costName === "" || isNaN(costAmount)) {
+        alert("Please enter valid details");
+        return
+    }
+    
+    //Create new item object
+    const cost = {
+        name: costName,
+        amount: costAmount
+    }
+
+    //Add item to items array
+    costs.push(cost);
+
+    renderItems();
 }
+
+//Function to delete items
+function deleteItem(event) {
+    if (event.target.classList.contains("delete-btn"))  {
+
+        //Get item index from data-id attribute
+        const costIndex = parseInt(event.target.getAttribute("data-id"));
+
+        //Remove item from item array
+        costs.splice(costIndex, 1);
+
+        //Render items
+        renderItems();
+    }
+}
+
+//Add event listeners
+costForm.addEventListener("submit", addExpenses);
+costList.addEventListener("click", deleteItem);
+
+//Render initial items on page load
+renderItems();
