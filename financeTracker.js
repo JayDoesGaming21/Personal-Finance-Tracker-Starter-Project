@@ -1,20 +1,28 @@
 const costForm = document.getElementById("cost-form");
+const incomeForm = document.getElementById("income-form");
 const costList = document.getElementById("cost-list");
-const totalAmountElement = document.getElementById("total-amount");
+const incomeList = document.getElementById("income-list");
+const totalCostElement = document.getElementById("total-cost");
+const totalIncomeElement = document.getElementById("total-income");
+const totalRemainingElement = document.getElementById("total-remaining");
 
 //Initialize items array from localStorage
 let costs = JSON.parse(localStorage.getItem("costs")) || [];
+let incomes = JSON.parse(localStorage.getItem("incomes")) || [];
 
-// Function to render expenses in tabular form
-function renderItems() {
+//Initialize totals outside of function
+let totalCost = 0;
+let totalIncome = 0;
+let totalRemaining = 0;
 
-    //Clear expense list
+// Function to render costs in tabular form
+function renderCosts() {
+
+    //Clear cost list
     costList.innerHTML = "";
 
-    //Initialize total amount
-    let totalAmount = 0;
 
-    // Loop through items array and create table rows
+    // Loop through costs array and create table rows
     for (let i =0; i < costs.length; i++) {
         const cost = costs[i];
         const costRow = document.createElement("tr");
@@ -26,20 +34,56 @@ function renderItems() {
         costList.appendChild(costRow);
 
         //Update total Amount
-        totalAmount += cost.amount;
+        totalCost += cost.amount;
     } 
 
     //Update total amount display
-    totalAmountElement.textContent = totalAmount.toFixed(2)
+    totalCostElement.textContent = totalCost.toFixed(2)
+    totalRemaining = totalIncome - totalCost
+    totalRemainingElement.textContent = totalRemaining.toFixed(2)
 
     //Save expenses to localStorage
     localStorage.setItem("costs", JSON.stringify(costs));
 
 }
 
-// Function to add expense 
-function addExpenses(event) {
+// Function to render incomes in tabular form
+function renderIncomes() {
+
+    //Clear cost list
+    incomeList.innerHTML = "";
+
+    // Loop through incomes array and create table rows
+    for (let i =0; i < incomes.length; i++) {
+        const income = incomes[i];
+        const incomeRow = document.createElement("tr");
+        incomeRow.innerHTML = `
+        <td>${income.name}</td>
+        <td>$${income.amount}</td>
+        <td class ='delete-btn' data-id="${i}">Delete</td>`;
+        
+        incomeList.appendChild(incomeRow);
+
+        //Update total Amount
+        totalIncome += income.amount;
+    } 
+
+    //Update total amount display
+    totalIncomeElement.textContent = totalIncome.toFixed(2)
+    totalRemaining = totalIncome - totalCost
+    totalRemainingElement.textContent = totalRemaining.toFixed(2)
+
+    //Save expenses to localStorage
+    localStorage.setItem("incomes", JSON.stringify(incomes));
+
+}
+
+// Function to add costs 
+function addCosts(event) {
     event.preventDefault();
+
+    totalCost = 0;
+    totalCostElement.textContent = totalCost.toFixed(2)
 
     //Get expense name and add from form
     const costNameInput = document.getElementById("cost-name");
@@ -66,11 +110,49 @@ function addExpenses(event) {
     //Add item to items array
     costs.push(cost);
 
-    renderItems();
+    renderCosts();
 }
 
-//Function to delete items
-function deleteItem(event) {
+// Function to add incomes 
+function addIncomes(event) {
+    event.preventDefault();
+
+    totalIncome = 0;
+    totalIncomeElement.textContent = totalIncome.toFixed(2)
+
+    //Get expense name and add from form
+    const incomeNameInput = document.getElementById("income-name");
+    const incomeAmountInput = document.getElementById("income-amount");
+    const incomeName = incomeNameInput.value;
+    const incomeAmount = parseFloat(incomeAmountInput.value);
+
+    //clear form inputs
+    incomeNameInput.value = "";
+    incomeAmountInput.value = "";
+
+    //Validate inputs
+    if (incomeName === "" || isNaN(incomeAmount)) {
+        alert("Please enter valid details");
+        return
+    }
+    
+    //Create new item object
+    const income = {
+        name: incomeName,
+        amount: incomeAmount
+    }
+
+    //Add item to items array
+    incomes.push(income);
+
+    renderIncomes();
+}
+
+//Function to delete costs
+function deleteCost(event) {
+
+    totalCost = 0;
+    totalCostElement.textContent = totalCost.toFixed(2)
     if (event.target.classList.contains("delete-btn"))  {
 
         //Get item index from data-id attribute
@@ -80,13 +162,34 @@ function deleteItem(event) {
         costs.splice(costIndex, 1);
 
         //Render items
-        renderItems();
+        renderCosts();
+    }
+}
+
+//Function to delete incomes
+function deleteIncome(event) {
+
+    totalIncome = 0;
+    totalIncomeElement.textContent = totalIncome.toFixed(2)
+    if (event.target.classList.contains("delete-btn"))  {
+
+        //Get item index from data-id attribute
+        const incomeIndex = parseInt(event.target.getAttribute("data-id"));
+
+        //Remove item from item array
+        incomes.splice(incomeIndex, 1);
+
+        //Render items
+        renderIncomes();
     }
 }
 
 //Add event listeners
-costForm.addEventListener("submit", addExpenses);
-costList.addEventListener("click", deleteItem);
+costForm.addEventListener("submit", addCosts);
+costList.addEventListener("click", deleteCost);
+incomeForm.addEventListener("submit", addIncomes);
+incomeList.addEventListener("click", deleteIncome);
 
 //Render initial items on page load
-renderItems();
+renderCosts();
+renderIncomes();
