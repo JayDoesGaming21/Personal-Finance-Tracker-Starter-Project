@@ -33,11 +33,11 @@ function renderCosts() {
         
         costList.appendChild(costRow);
 
-        //Update total Amount
+        //Update total amount
         totalCost += cost.amount;
     } 
 
-    //Update total amount display
+    //Update total amount display and total cost display
     totalCostElement.textContent = totalCost.toFixed(2)
     totalRemaining = totalIncome - totalCost
     totalRemainingElement.textContent = totalRemaining.toFixed(2)
@@ -50,7 +50,7 @@ function renderCosts() {
 // Function to render incomes in tabular form
 function renderIncomes() {
 
-    //Clear cost list
+    //Clear income list
     incomeList.innerHTML = "";
 
     // Loop through incomes array and create table rows
@@ -64,16 +64,16 @@ function renderIncomes() {
         
         incomeList.appendChild(incomeRow);
 
-        //Update total Amount
+        //Update total amount
         totalIncome += income.amount;
     } 
 
-    //Update total amount display
+    //Update total amount display and total income display
     totalIncomeElement.textContent = totalIncome.toFixed(2)
     totalRemaining = totalIncome - totalCost
     totalRemainingElement.textContent = totalRemaining.toFixed(2)
 
-    //Save expenses to localStorage
+    //Save incomes to localStorage
     localStorage.setItem("incomes", JSON.stringify(incomes));
 
 }
@@ -85,7 +85,7 @@ function addCosts(event) {
     totalCost = 0;
     totalCostElement.textContent = totalCost.toFixed(2)
 
-    //Get expense name and add from form
+    //Get cost name and add from form
     const costNameInput = document.getElementById("cost-name");
     const costAmountInput = document.getElementById("cost-amount");
     const costName = costNameInput.value;
@@ -101,13 +101,13 @@ function addCosts(event) {
         return
     }
     
-    //Create new item object
+    //Create new cost object
     const cost = {
         name: costName,
         amount: costAmount
     }
 
-    //Add item to items array
+    //Add cost to costs array
     costs.push(cost);
 
     renderCosts();
@@ -120,7 +120,7 @@ function addIncomes(event) {
     totalIncome = 0;
     totalIncomeElement.textContent = totalIncome.toFixed(2)
 
-    //Get expense name and add from form
+    //Get income name and add from form
     const incomeNameInput = document.getElementById("income-name");
     const incomeAmountInput = document.getElementById("income-amount");
     const incomeName = incomeNameInput.value;
@@ -136,13 +136,13 @@ function addIncomes(event) {
         return
     }
     
-    //Create new item object
+    //Create new income object
     const income = {
         name: incomeName,
         amount: incomeAmount
     }
 
-    //Add item to items array
+    //Add income to incomes array
     incomes.push(income);
 
     renderIncomes();
@@ -155,13 +155,13 @@ function deleteCost(event) {
     totalCostElement.textContent = totalCost.toFixed(2)
     if (event.target.classList.contains("delete-btn"))  {
 
-        //Get item index from data-id attribute
+        //Get cost index from data-id attribute
         const costIndex = parseInt(event.target.getAttribute("data-id"));
 
-        //Remove item from item array
+        //Remove cost from costs array
         costs.splice(costIndex, 1);
 
-        //Render items
+        //Render costs
         renderCosts();
     }
 }
@@ -173,13 +173,13 @@ function deleteIncome(event) {
     totalIncomeElement.textContent = totalIncome.toFixed(2)
     if (event.target.classList.contains("delete-btn"))  {
 
-        //Get item index from data-id attribute
+        //Get income index from data-id attribute
         const incomeIndex = parseInt(event.target.getAttribute("data-id"));
 
-        //Remove item from item array
+        //Remove income from incomes array
         incomes.splice(incomeIndex, 1);
 
-        //Render items
+        //Render incomes
         renderIncomes();
     }
 }
