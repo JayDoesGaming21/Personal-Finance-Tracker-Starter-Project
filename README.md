@@ -20,8 +20,8 @@ Instructions: How to use the program
 
 1. Type in whatever your income resource is and add it to the list.
 It can be either one or more income resources that can be tracked
-and provide an estimated amount on how much money is earned from that
-income resource monthly.
+and provide an estimated amount on how much money is earned from those
+income resources monthly.
 
 2. Do the same thing for expenses from Step One, except provide
 the amount that each expense costs in general that has to be spent
@@ -30,17 +30,16 @@ every month.
 3. If necessary, you can categorize the type of income you receive
 and see how much money is left over based on the type of income that
 is applied to the number of expenses you want to spend money on.
-For example: Full-Time Employment, Part-Time Employment, Self-Employed,
+For example: Full-Time Employment Income, Part-Time Employment Income, Self-Employed Income,
 Gifts, and other Miscellaneous jobs.
 
 4. Same thing for expenses from Step Three, except expenses would be categorized
-based on: Rent, Utilities, Gas, Food, and Public Services (among other miscellaneous
-expenses that can be specified by search).
+based on: House Expenses (Rent, Utilities, Appliances, etc.), Personal Expenses (Gas, Food, Public Services, etc.),
+among other miscellaneous expenses that can also be specified by search.
 
 5. Once everything is either categorized/uncategorized or listed between Income and Expenses,
-click the submit button to see the remainder of the money you have after your expenses have
-been paid for. The system will ask if you want to continue using the program as much as necessary until
-you're ready to discontinue.
+the program will automatically allow you to see the remainder of the money you have after your expenses have
+been paid for.
 
 Project Setup: How it all started
 
@@ -63,15 +62,16 @@ easy to understand and what their main purposes were. We did the same for Classe
 2. Simple Functions: We simplified our functions to where they would be tasked with handling at least one or
 possibly two tasks at one time while having limited parameters in them as arguments.
 
-3. Error Handling: Because JavaScript comes with an automatic error-handling system of code,
+3. Error Handling: Because the specific HTML code came with an automatic error-handling system,
 it would handle the many errors we receive as feedback whenever things go wrong in the testing process.
-However, just for reassurance, we implemented a data-type checker in case the user types in the wrong data type
-for a particular field.
+However, just for reassurance, we implemented a limit checker (like 0 or not going to negative numbers)
+in some areas of the code in case the user types in the wrong information for a particular field.
 
 4. Refactoring: Once all of our main code was in, we reviewed it several times and created at least
 one or two more branches for testing and refactoring in case we wanted to change something in a particular
-code section for the entire project. We would only refactor if we feel as though there is too much unnecessary code
-in particular spots that would be too much for another user or developer to understand better.
+code section for the entire project. We would only refactor if we feel as though some changes still needed
+to be made, or that if there is too much unnecessary code in particular spots. In regards to that, we would
+basically make it easier for another user or developer to understand the entire project better in the end.
 
 5. Testing: We have gone back to back with testing the code throughout the entire project. From the beginning
 of the project, to the middle, and at the very end we have tested throughout the entire process to make sure everything
